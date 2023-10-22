@@ -1,10 +1,14 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 const DiaryEditor = () => {
+  const userInput = useRef();
+  const userTextarea = useRef();
+  const userSelect = useRef();
+
   const [state, setState] = useState({
     input: '',
     textarea: '',
-    select: 1,
+    select: 'default',
   });
   const handleChangeState = (e) => {
     setState({
@@ -13,21 +17,34 @@ const DiaryEditor = () => {
     });
   };
   const handleSubmit = () => {
-    console.log(state);
+    console.log(state)
+    if (state.input.length < 5) {
+      userInput.current.focus();
+      return;
+    }
+    if (state.textarea.length < 10) {
+      userTextarea.current.focus();
+      return;
+    }
+    if (state.select === 'default') {
+      userSelect.current.focus();
+      return
+    }
     alert('저장 성공');
   };
   return (
-    <div className='DiaryEditor'>
+    <div className="DiaryEditor">
       <h2>입력 폼 공부하기</h2>
       <div>
-        <input name="input" value={state.input} onChange={handleChangeState} />
+        <input ref={userInput} name="input" value={state.input} onChange={handleChangeState} />
       </div>
       <div>
-        <textarea name="textarea" value={state.textarea} onChange={handleChangeState} />
+        <textarea ref={userTextarea} name="textarea" value={state.textarea} onChange={handleChangeState} />
       </div>
       <div>
-        오늘의 셀렉트 : 
-        <select name="select" value={state.select} onChange={handleChangeState}>
+        셀렉트 :
+        <select ref={userSelect} name="select" value={state.select} onChange={handleChangeState}>
+          <option value="default">선택해주세요</option>
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>

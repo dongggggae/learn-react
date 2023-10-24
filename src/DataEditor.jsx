@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 
-const DiaryEditor = () => {
+const DataEditor = ({ onCreate }) => {
   const userInput = useRef();
   const userTextarea = useRef();
   const userSelect = useRef();
@@ -17,7 +18,7 @@ const DiaryEditor = () => {
     });
   };
   const handleSubmit = () => {
-    console.log(state)
+    console.log(state);
     if (state.input.length < 5) {
       userInput.current.focus();
       return;
@@ -28,12 +29,19 @@ const DiaryEditor = () => {
     }
     if (state.select === 'default') {
       userSelect.current.focus();
-      return
+      return;
     }
+    onCreate(state.input, state.textarea, state.select);
+    console.log(state);
+    setState({
+      input: '',
+      textarea: '',
+      select: 1,
+    });
     alert('저장 성공');
   };
   return (
-    <div className="DiaryEditor">
+    <div className="DataEditor">
       <h2>입력 폼 공부하기</h2>
       <div>
         <input ref={userInput} name="input" value={state.input} onChange={handleChangeState} />
@@ -58,5 +66,7 @@ const DiaryEditor = () => {
     </div>
   );
 };
-
-export default DiaryEditor;
+DataEditor.propTypes = {
+  onCreate: PropTypes.array.isRequired,
+};
+export default DataEditor;

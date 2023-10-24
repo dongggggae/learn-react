@@ -7,29 +7,41 @@
   text-align: center;
 }
 
-.DiaryEditor {
+.DataEditor {
   padding: 20px;
   border: 1px solid #fff;
 }
 
-.DiaryEditor input,
+.DataEditor input,
 textarea {
   width: 500px;
   margin-bottom: 20px;
   padding: 15px;
 }
 
-.DiaryEditor textarea {
+.DataEditor textarea {
   height: 150px;
 }
 
-.DiaryEditor select {
+.DataEditor select {
   width: 300px;
   margin: 0 0 30px 20px;
   padding: 10px;
 }
 
-.DiaryEditor button {
+.DataEditor button {
   width: 500px;
   cursor: pointer;
+}
+
+.DataList {
+  margin-top: 30px;
+}
+
+.DataItem {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #efefef;
+  border-radius: 10px;
+  color: #000;
 }

@@ -2,66 +2,70 @@ import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 const DataEditor = ({ onCreate }) => {
-  const userInput = useRef();
-  const userTextarea = useRef();
-  const userSelect = useRef();
+  const subjectName = useRef();
+  const subjectContent = useRef();
+  const subjectScore = useRef();
 
   const [state, setState] = useState({
-    input: '',
-    textarea: '',
-    select: 'default',
+    name: '',
+    content: '',
+    score: 'default',
   });
+
   const handleChangeState = (e) => {
     setState({
       ...state,
       [e.target.name]: e.target.value,
     });
   };
+
   const handleSubmit = () => {
     console.log(state);
-    if (state.input.length < 5) {
-      userInput.current.focus();
+    if (state.name.length < 5) {
+      subjectName.current.focus();
       return;
     }
-    if (state.textarea.length < 10) {
-      userTextarea.current.focus();
+    if (state.content.length < 10) {
+      subjectContent.current.focus();
       return;
     }
-    if (state.select === 'default') {
-      userSelect.current.focus();
+    if (state.score === 'default') {
+      subjectScore.current.focus();
       return;
     }
-    onCreate(state.input, state.textarea, state.select);
-    console.log(state);
+
+    onCreate(state.name, state.content, state.score);
+
     setState({
-      input: '',
-      textarea: '',
-      select: 1,
+      name: '',
+      content: '',
+      score: 'default',
     });
-    alert('저장 성공');
   };
+
   return (
     <div className="DataEditor">
-      <h2>입력 폼 공부하기</h2>
-      <div>
-        <input ref={userInput} name="input" value={state.input} onChange={handleChangeState} />
+      <div className="FlexBox">
+        <p>강의명 :</p>
+        <input name="name" type="text" value={state.name} onChange={handleChangeState} ref={subjectName} />
       </div>
-      <div>
-        <textarea ref={userTextarea} name="textarea" value={state.textarea} onChange={handleChangeState} />
+      <div className="FlexBox">
+        <p>강의 내용 :</p>
+        <textarea name="content" value={state.content} onChange={handleChangeState} ref={subjectContent} />
       </div>
-      <div>
-        셀렉트 :
-        <select ref={userSelect} name="select" value={state.select} onChange={handleChangeState}>
-          <option value="default">선택해주세요</option>
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
+      <div className="FlexBox">
+        <p>강의 점수 :</p>
+        <select name="score" value={state.score} onChange={handleChangeState} ref={subjectScore}>
+          <option value="default">점수를 선택해주세요</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
         </select>
       </div>
       <div>
-        <button onClick={handleSubmit}>저장 하기</button>
+        <button onClick={handleSubmit}>수강신청</button>
       </div>
     </div>
   );
@@ -69,4 +73,5 @@ const DataEditor = ({ onCreate }) => {
 DataEditor.propTypes = {
   onCreate: PropTypes.array.isRequired,
 };
+
 export default DataEditor;

@@ -1,19 +1,23 @@
 import PropTypes from 'prop-types';
-const DataItem = ({ id, input, textarea, select }) => {
+const DataItem = ({ id, name, content, score }) => {
   return (
     <div className="DataItem">
-      <div>{id}번째 내용</div>
-      <div>작성자 : {input}</div>
-      <div>글 내용 : {textarea}</div>
-      <div>오늘의 점수 : {select}</div>
+      <h2 className="SbujectTitle">
+        {id}. {name}
+      </h2>
+      <div className="SubjectContent">{content}</div>
+      <div className="SubjectScore">
+        <p>
+          강의 점수 : <span>{score}</span>
+        </p>
+      </div>
     </div>
   );
 };
-
 DataItem.propTypes = {
   id: PropTypes.array.isRequired,
-  input: PropTypes.array.isRequired,
-  textarea: PropTypes.array.isRequired,
-  select: PropTypes.array.isRequired,
+  name: PropTypes.array.isRequired,
+  content: PropTypes.array.isRequired,
+  score: PropTypes.array.isRequired,
 };
 export default DataItem;

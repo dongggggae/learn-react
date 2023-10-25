@@ -71,7 +71,7 @@ const DataEditor = ({ onCreate }) => {
   );
 };
 DataEditor.propTypes = {
-  onCreate: PropTypes.array.isRequired,
+  onCreate: PropTypes.func.isRequired,
 };
 
 export default DataEditor;

@@ -15,9 +15,9 @@ const DataItem = ({ id, name, content, score }) => {
   );
 };
 DataItem.propTypes = {
-  id: PropTypes.array.isRequired,
-  name: PropTypes.array.isRequired,
-  content: PropTypes.array.isRequired,
-  score: PropTypes.array.isRequired,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  name: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  score: PropTypes.string.isRequired,
 };
 export default DataItem;

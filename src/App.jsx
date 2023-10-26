@@ -21,6 +21,13 @@ function App() {
     dataId.current += 1;
     setData([newItem, ...data]);
   };
+
+  const onDelete = (targetId) => {
+    const newDataList = data.filter((it) => it.id !== targetId);
+
+    setData(newDataList);
+  };
+
   return (
     <div className="App">
       <div className="TitleArea">
@@ -32,7 +39,7 @@ function App() {
         </ul>
       </div>
       <DataEditor onCreate={onCreate} />
-      <DataList dataList={data} />
+      <DataList dataList={data} onDelete={onDelete} />
     </div>
   );
 }

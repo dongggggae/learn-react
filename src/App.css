@@ -52,7 +52,7 @@
 }
 
 .DataEditor input,
-textarea {
+.DataEditor textarea {
   width: 500px;
   margin-bottom: 20px;
   padding: 15px;

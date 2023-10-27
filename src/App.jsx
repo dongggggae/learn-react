@@ -22,7 +22,7 @@ function App() {
     setData([newItem, ...data]);
   };
 
-  const onDelete = (targetId) => {
+  const onRemove = (targetId) => {
     const newDataList = data.filter((it) => it.id !== targetId);
 
     setData(newDataList);
@@ -39,7 +39,7 @@ function App() {
         </ul>
       </div>
       <DataEditor onCreate={onCreate} />
-      <DataList dataList={data} onDelete={onDelete} />
+      <DataList dataList={data} onRemove={onRemove} />
     </div>
   );
 }

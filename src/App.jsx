@@ -24,8 +24,11 @@ function App() {
 
   const onRemove = (targetId) => {
     const newDataList = data.filter((it) => it.id !== targetId);
-
     setData(newDataList);
+  };
+
+  const onEdit = (targetId, newContent) => {
+    setData(data.map((it) => (it.id === targetId ? { ...it, content: newContent } : it)));
   };
 
   return (
@@ -39,7 +42,7 @@ function App() {
         </ul>
       </div>
       <DataEditor onCreate={onCreate} />
-      <DataList dataList={data} onRemove={onRemove} />
+      <DataList dataList={data} onRemove={onRemove} onEdit={onEdit} />
     </div>
   );
 }

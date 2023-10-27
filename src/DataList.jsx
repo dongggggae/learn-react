@@ -19,6 +19,6 @@ DataList.defaultProps = {
 DataList.propTypes = {
   dataList: PropTypes.array.isRequired,
   onRemove: PropTypes.func.isRequired,
-  
+  onEdit: PropTypes.func.isRequired,
 };
 export default DataList;

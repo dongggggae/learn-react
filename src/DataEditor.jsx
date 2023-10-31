@@ -20,15 +20,16 @@ const DataEditor = ({ onCreate }) => {
   };
 
   const handleSubmit = () => {
-    console.log(state);
     if (state.name.length < 5) {
       subjectName.current.focus();
       return;
     }
+
     if (state.content.length < 10) {
       subjectContent.current.focus();
       return;
     }
+
     if (state.score === 'default') {
       subjectScore.current.focus();
       return;

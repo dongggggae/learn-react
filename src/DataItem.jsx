@@ -1,23 +1,10 @@
 import { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 const DataItem = ({ id, name, content, score, onRemove, onEdit }) => {
+  // Item 수정
   const [isEdit, setIsEdit] = useState(false);
 
   const toggleIsEdit = () => setIsEdit(!isEdit);
-
-  const [localContent, setLocalContent] = useState(content);
-
-  const localContentInput = useRef();
-
-  const handleChangeContent = (e) => {
-    setLocalContent(e.target.value);
-  };
-
-  const handleRemove = () => {
-    if (window.confirm(`${id}번째 일기를 정말 삭제하시겠습니까?`)) {
-      onRemove(id);
-    }
-  };
 
   const handleQuitEdit = () => {
     setIsEdit(false);
@@ -33,6 +20,20 @@ const DataItem = ({ id, name, content, score, onRemove, onEdit }) => {
     if (window.confirm(`${id}번 째 일기를 수정하시겠습니까?`)) {
       onEdit(id, localContent);
       toggleIsEdit();
+    }
+  };
+
+  const [localContent, setLocalContent] = useState(content);
+
+  const localContentInput = useRef();
+
+  const handleChangeContent = (e) => {
+    setLocalContent(e.target.value);
+  };
+  // Item 삭제
+  const handleRemove = () => {
+    if (window.confirm(`${id}번째 일기를 정말 삭제하시겠습니까?`)) {
+      onRemove(id);
     }
   };
 

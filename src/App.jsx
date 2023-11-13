@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useMemo, useState, useRef, useEffect } from 'react';
 import './App.css';
 
 import DataEditor from './DataEditor';
@@ -50,6 +50,18 @@ function App() {
     setData(data.map((it) => (it.id === targetId ? { ...it, content: newContent } : it)));
   };
 
+  const getDataAnalysis = useMemo(() => {
+    console.log('데이터 분석 시작');
+
+    const goodData = data.filter((it) => it.score >= 3).length;
+    const badData = data.length - goodData;
+    const dataRatio = (goodData / data.length) * 100;
+
+    return { goodData, badData, dataRatio };
+  }, [data]);
+
+  const { goodData, badData, dataRatio } = getDataAnalysis;
+
   return (
     <div className="App">
       <div className="TitleArea">
@@ -61,6 +73,10 @@ function App() {
         </ul>
       </div>
       <DataEditor onCreate={onCreate} />
+      <p>전체 일기 : {data.length}</p>
+      <p>점수 높은 데이터 개수 : {goodData}</p>
+      <p>점수 낮은 데이터 개수 : {badData}</p>
+      <p>좋은 데이터의 비율 : {dataRatio}</p>
       <DataList dataList={data} onRemove={onRemove} onEdit={onEdit} />
     </div>
   );

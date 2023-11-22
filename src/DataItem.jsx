@@ -30,7 +30,7 @@ const DataItem = ({ id, name, content, score, onRemove, onEdit }) => {
   const handleChangeContent = (e) => {
     setLocalContent(e.target.value);
   };
-  // Item 삭제
+
   const handleRemove = () => {
     if (window.confirm(`${id}번째 일기를 정말 삭제하시겠습니까?`)) {
       onRemove(id);
@@ -76,8 +76,8 @@ DataItem.propTypes = {
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   name: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
-  score: PropTypes.string.isRequired,
-  onRemove: PropTypes.func.isRequired,
-  onEdit: PropTypes.func.isRequired,
+  score: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onRemove: PropTypes.func,
+  onEdit: PropTypes.func,
 };
 export default DataItem;

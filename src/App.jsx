@@ -1,20 +1,47 @@
-import { useMemo, useState, useRef, useEffect } from 'react';
+import { useMemo, useRef, useEffect, useReducer, useCallback } from 'react';
 import './App.css';
 
 import DataEditor from './DataEditor';
 import DataList from './DataList';
 
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'INIT': {
+      return action.data;
+    }
+    case 'CREATE': {
+      const newItem = {
+        ...action.data,
+      };
+      return [newItem, ...state];
+    }
+    case 'REMOVE': {
+      return state.filter((it) => it.id !== action.targetId);
+    }
+    case 'EDIT': {
+      return state.map((it) =>
+        it.id === action.targetId
+          ? {
+              ...it,
+              content: action.newContent,
+            }
+          : it,
+      );
+    }
+    default:
+      return state;
+  }
+};
+
 function App() {
   const subject = ['국어', '수학', '영어', '과학탐구', '사회탐구'];
 
-  const [data, setData] = useState([]);
-
+  const [data, dispatch] = useReducer(reducer, []);
   const dataId = useRef(0);
-
   const getData = async () => {
     const res = await fetch('https://jsonplaceholder.typicode.com/comments').then((res) => res.json());
 
-    const initData = res.slice(0, 50).map((item) => {
+    const initData = res.slice(0, 20).map((item) => {
       return {
         name: item.email,
         content: item.body,
@@ -23,7 +50,7 @@ function App() {
       };
     });
 
-    setData(initData);
+    dispatch({ type: 'INIT', data: initData });
   };
 
   useEffect(() => {
@@ -31,34 +58,41 @@ function App() {
   }, []);
 
   const onCreate = (name, content, score) => {
-    const newItem = {
-      name,
-      content,
-      score,
-      id: dataId.current,
-    };
+    dispatch({
+      type: 'CREATE',
+      data: {
+        name,
+        content,
+        score,
+        id: dataId.current,
+      },
+    });
     dataId.current += 1;
-    setData([newItem, ...data]);
   };
 
-  const onRemove = (targetId) => {
-    const newDataList = data.filter((it) => it.id !== targetId);
-    setData(newDataList);
-  };
+  const onRemove = useCallback((targetId) => {
+    dispatch({
+      type: 'REMOVE',
+      targetId,
+    });
+  }, []);
 
-  const onEdit = (targetId, newContent) => {
-    setData(data.map((it) => (it.id === targetId ? { ...it, content: newContent } : it)));
-  };
+  const onEdit = useCallback((targetId, newContent) => {
+    dispatch({
+      type: 'EDIT',
+      targetId,
+      newContent,
+    });
+  }, []);
 
-  const getDataAnalysis = useMemo(() => {
-    const goodData = data.filter((it) => it.score >= 3).length;
+  const memoizedDiaryAnalysis = useMemo(() => {
+    const goodData = data.filter((it) => it.emotion >= 3).length;
     const badData = data.length - goodData;
-    const dataRatio = (goodData / data.length) * 100;
-
+    const dataRatio = (goodData / data.length) * 100.0;
     return { goodData, badData, dataRatio };
   }, [data.length]);
 
-  const { goodData, badData, dataRatio } = getDataAnalysis;
+  const { goodData, badData, dataRatio } = memoizedDiaryAnalysis;
 
   return (
     <div className="App">
